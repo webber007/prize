@@ -1,0 +1,378 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>有奖互动</title>
+<script src="./images/jquery-1.7.2.js" language="javascript"></script>
+<style>
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}
+body,button,input,select,textarea{font:12px arial,\5b8b\4f53,sans-serif;}
+h1,h2,h3,h4,h5,h6{font-size:100%;}address,cite,dfn,em,var{font-style:normal;}code,kbd,pre,samp{font-family:courier new,courier,monospace;}small{font-size:12px;}ul,ol{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}legend{color:#000;}fieldset,img{border:0;}button,input,select,textarea{font-size:100%;}.col-main{float:left;width:100%;min-height:1px;}.hidden{display:none;}.invisible{visibility:hidden;}
+.clear:after{content:'\20';display:block;height:0;clear:both;}.clear{*zoom:1;font-size:0;clear:both;}
+a:link,a:visited{color:#000;text-decoration:none;}
+a:hover{color:#c00;text-decoration:underline;}
+img{border:0;-ms-interpolation-mode:bicubic;}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+* html>body .clearfix{display:inline-block;width:100%}
+* html .clearfix{/* Hides from IE-mac \*/ height:1%;/* End hide from IE-mac */}
+*+html .clearfix{min-height:1%}
+
+table{margin:0 auto;}
+td{ text-align:center;color:#616161;font-size:18px; font-family:\5b8b\4f53,sans-serif;}
+.color1{ background:#efefcd;}
+.color2{ background:#ffcba4;}
+img{margin-bottom:15px;}
+table .on{background:#ffce22;color:#fff;}
+.button{ background:url(./images/btnOff.jpg);background-size:100% 100%;cursor:pointer;}
+.button:hover{ background:url(./images/btn.jpg);background-size:100% 100%;cursor:pointer;}
+.banner{ text-align:center; margin:18px;font-size}
+.ques{width:550px; height:550px; margin:30px auto 0;}
+.popbox{text-align:center; vertical-align:center; background:rgba(0,0,0,0.5);position:absolute;top:0;width:0;display:none;z-index:998;}
+.popbox .box{width:360px;height:285px; border:solid 3px #ff7f1f; border-radius:5px; background:#fff; margin:150px auto 0; position:relative;}
+.question .line{width:304px; height:46px; margin:0 auto; border-bottom:solid 1px #ff7f1f;}
+.question .line .words{width:94px; height:26px; font-size:26px; line-height:26px; padding-top:32px; text-align:center; background:#fff; margin:0 auto;color:#ff7f1f;}
+.question .content{width:286px;padding-top:40px; font-size:26px;color:#333; margin:0 auto;}
+.question .sureBtn{width:94px; height:32px; line-height:32px;font-size:24px; text-align:center; background:#ff7f1f; border-radius:5px; position:absolute; bottom:32px; left:140px;color:#fff;cursor:pointer;}
+.answer .content{width:100%; height:100%; text-align:center; padding-top:100px;font-size:30px;color:#333;}
+.answer .content .f{color:#ff7f1f;font-size:26px;}
+.answer .close{font-size:48px; color:#fff; width:58px; height:58px; line-height:58px; text-align:center; border-radius:50%; right:-29px; top:-29px; position:absolute; z-index:999;cursor:pointer; background:#ff7f1f;}
+.leftNum{ width: 500px;margin: 0 auto; border: solid 1px red; padding: 30px; line-height: 30px;left:50%;margin-left:-280px;top:50%;display: none; position: absolute; background: #fff; }
+.leftNum .f{width: 200px;float: left;}
+.leftNum .f2{width: 250px;float: left;}
+.leftNum input{height: 20px;width: 120px;}
+.banner{font-size:32px; cursor: pointer;}
+.sz{width: 100px; border:solid 1px red; font-size:24px;line-height: 24px;padding: 5px;text-align: center;cursor: pointer;float: left; background: #fff;}
+.loginfo{width: 500px;height:200px;overflow:auto;margin: 0 auto; border: solid 1px red; padding: 30px; line-height: 30px; left:50%;margin-left:-280px;top:50%;display: none; position: absolute; background: #fff;}
+.log{width: 100px; border:solid 1px red; font-size:24px;line-height: 24px;padding: 5px;text-align: center;cursor: pointer;float: left; margin-left:10px; background: #fff;}
+.szpop{width: 240px; margin: 10px auto; height: 20px;display:none;}
+.ps{width: 250px; height: 40px; margin: 20px auto 0; text-align: center;display: none;}
+.ps li{width: 100px;margin:5px;float: left;font-size:24px;line-height: 24px;padding:5px; text-align: center;border: solid 1px #f0f0f0;cursor: pointer;}
+.ps li.on{background: red;color:#fff;}
+.mod{width: 100px; margin: 5px;padding: 5px;text-align: center;font-size:24px;border: solid 1px red; background:#fff;cursor: pointer;}
+.jishu{width: 400px;}
+</style>
+</head>
+
+<body>
+	<div style="width: 30px; height: 30px; position: fixed;background: red;cursor: pointer;left:0;top:0;" id="setting"></div>
+<ul class="ps">
+	<li class="on">抽奖A</li>
+	<li>抽奖B</li>
+</ul>
+<div class="leftNum">
+	<div class="leftNumC">
+	</div>
+	<div class="jishu">不中奖基数<input type="text" value="100" id="jisu" />(越小获奖几率越大)</div>
+	<div class="mod">修改</div>
+</div>
+<div class="loginfo">
+</div>
+ 
+<div class="ques">
+<table width="100%" border="0" onclick="start()" cellspacing="2">
+  <tr>
+    <td class="c1 color1" width="33.3%"></td>
+    <td class="c2 color2" width="33.3%"></td>
+    <td class="c3 color1" width="33.3%"></td>
+  </tr>
+  <tr>
+    <td class="c8 color2"></td>
+    <td class="button"></td>
+    <td class="c4 color2"></td>
+  </tr>
+  <tr>
+    <td class="c7 color1"></td>
+    <td class="c6 color2"></td>
+    <td class="c5 color1"></td>
+  </tr>
+</table>
+</div>
+<div class="popbox">
+	<div class="question box" id="question">
+        <div class="content" id="qcontent"></div>
+        <div class="sureBtn">确定</div>
+    </div> 
+</div>
+<div class="szpop">
+	<div class="sz">设置</div>
+	<div class="log">抽奖记录</div>
+</div>
+<script src="config.js"></script>
+<script>
+var rand,
+isstart = false,
+storage = window.localStorage;
+var currentPirze = 0; //当前抽奖
+ 
+Number.prototype.toFixed = function( fractionDigits )  
+{  
+    return (parseInt(this * Math.pow( 10, fractionDigits  ) + 0.5)/Math.pow(10,fractionDigits)).toString();  
+}  
+
+//设置转盘奖品
+function loading(){
+	for(let i=1;i<9;i++){
+		var title = questionArr[currentPirze][i-1][1];
+		if(title=='谢谢参与'){
+			$(".c"+i).html(title);
+		}else{
+			$(".c"+i).html('<img src="./images/prize'+currentPirze+'/'+i+'.png" height="50%" /><br />'+title);
+		}
+		
+		//剩余存入database
+		if(typeof storage[currentPirze+'-'+i] == 'undefined' &&  (questionArr[currentPirze][i-1][2] != undefined)){
+			storage[currentPirze+'-'+i] =  questionArr[currentPirze][i-1][2];
+		}
+	}
+
+	//载入设置中的数据
+	loadLeft();
+}
+
+function loadLeft(){
+	if(storage['jisu'+currentPirze]!=undefined){
+		$("#jisu").val(storage['jisu'+currentPirze]);
+	}else{
+		storage['jisu'+currentPirze] = $("#jisu").val();
+	}
+
+	$(".leftNumC").html('');
+
+	var _t = 0;
+	for(let i=1;i<9;i++){
+		var title = questionArr[currentPirze][i-1][1];
+		if(title=='谢谢参与') continue;
+		_t+=parseInt(storage[currentPirze+'-'+i]);
+	}
+	_t+=parseInt($("#jisu").val());
+
+	//载入剩余数量
+	for(let i=1;i<9;i++){
+		var title = questionArr[currentPirze][i-1][1];
+		if(title=='谢谢参与') continue;
+
+		var l = parseInt(storage[currentPirze+'-'+i]); 
+		var s = (l*100/_t).toFixed(2) +'%';
+
+
+		$(".leftNumC").append("<div class='f'>"+title+"总量："+questionArr[currentPirze][i-1][2]+"</div><div  class='f2'>剩余:<input type='text' value="+l+" id='leftN"+currentPirze+'-'+i+"'/> 概率:"+s+"</div>");
+	}
+
+	//载入日志
+	$(".loginfo").html('');
+	if(typeof storage["log"+currentPirze] != 'undefined'){
+		var log = storage["log"+currentPirze].split(",");
+		for(var i in log){
+			$(".loginfo").append("<div>"+log[i]+"</div>");
+		}
+	} 
+}
+
+
+//游戏点击开始
+function start(){
+	if(isstart) return false;
+	isstart=true;
+	base = -1;
+	t=500;
+
+	rand = getPrizeNum();
+	game();
+}
+
+//随机一个奖品
+function getPrizeNum(){
+	var total = 0;
+	var arr = [];
+	for(let i=1;i<9;i++){
+		if(storage[currentPirze+'-'+i]!=undefined && storage[currentPirze+'-'+i]>0){
+			var _t = parseInt(storage[currentPirze+'-'+i]);
+			total += _t;
+			arr.push([i,_t]);
+		}
+	}
+
+	total+=parseInt($("#jisu").val());
+	rand = Math.floor(Math.random()*total)+1;
+	console.log(rand+'-'+total);
+ 
+	var prizeAll = questionArr[currentPirze][8];
+	var prize = prizeAll[Math.floor(Math.random() * prizeAll.length)];
+	
+	var _total = 0;
+	for(let i in arr){
+		_total+=arr[i][1];
+		if(_total>=rand){
+			prize = arr[i][0];
+			break;
+		}
+	}
+
+	return prize;
+}
+ 
+
+var step = 100,d = 1;
+ 
+function game(){
+	if(base<24) {
+		t-=step;
+		if(t<=100) t=100;
+	}else if(base>=48){
+		t+=step;
+		if(t>=500) t=500;
+	}
+	
+	base++;
+ 	$("td").removeClass("on");
+	var s = base%8+1;
+	$(".c"+s).addClass("on");
+	if( base <= 64 ){
+		if(base>56 && s==rand){
+			 
+			setTimeout(function(){
+				var left = parseInt(storage[currentPirze+'-'+rand]),
+				title = questionArr[currentPirze][rand-1][1];
+				
+				if(title!='谢谢参与'){
+					if(left<=0){
+						title = '谢谢参与';
+						$("#qcontent").html(title);
+						$("td").removeClass("on");
+						$("td:contains('谢谢参与')").eq(0).addClass("on");
+					}else{ 
+						storage[currentPirze+'-'+rand]= left-1;
+						$("#qcontent").html('<img src="./images/prize'+currentPirze+'/'+rand+'.png" height="100" /><br />'+title);
+					}
+				}else{
+					$("#qcontent").html(title);
+				}
+
+				//操作记录写入日志
+				log = [];
+				if(storage["log"+currentPirze]!=undefined){
+					log = storage["log"+currentPirze].split(",");
+				}
+				log.push(getCurrentDate(2)+':'+title);
+				storage["log"+currentPirze] = log;
+				isstart=false;
+				loadLeft();
+				showPop("question");
+			},1000);
+		}else{
+			setTimeout(function(){
+				game();
+			},t);
+		}
+	}
+}
+
+function showPop(id){
+	$(".popbox .box").hide();
+	$(".popbox").show();
+	$(".popbox #"+id).fadeIn();
+}
+
+function hidePop(){
+	$(".popbox .box").hide();
+	$(".popbox").fadeOut();
+}
+
+function noQuestion(sel){
+	setTimeout(function(){
+		sel.removeClass("on");
+		setTimeout(function(){
+			sel.addClass("on");
+			setTimeout(function(){
+				sel.removeClass("on");
+					setTimeout(function(){
+						sel.addClass("on");
+					},200);
+			},200);
+		},200)
+	},200);
+}
+
+function getCurrentDate(format) {
+	  var now = new Date();
+	  var year = now.getFullYear(); //得到年份
+	  var month = now.getMonth();//得到月份
+	  var date = now.getDate();//得到日期
+	  var day = now.getDay();//得到周几
+	  var hour = now.getHours();//得到小时
+	  var minu = now.getMinutes();//得到分钟
+	  var sec = now.getSeconds();//得到秒
+	  month = month + 1;
+	  if (month < 10) month = "0" + month;
+	  if (date < 10) date = "0" + date;
+	  if (hour < 10) hour = "0" + hour;
+	  if (minu < 10) minu = "0" + minu;
+	  if (sec < 10) sec = "0" + sec;
+	  var time = "";
+	  //精确到天
+	  if(format==1){
+		time = year + "-" + month + "-" + date;
+	  }
+	  //精确到分
+	  else if(format==2){
+		time = year + "-" + month + "-" + date+ " " + hour + ":" + minu + ":" + sec;
+	  }
+	  return time;
+}
+
+
+$(function(){
+	loading();
+	$("td").css("height",$(".ques").width()/3.3);
+	$(".popbox").css({"width":$("html").width(),"height":Math.max($("html").height(),$(window).height())});
+	 
+	$(".sureBtn").on("click",function(){
+		hidePop();
+	});
+
+	$(".sz").on("click",function(){
+		$(".leftNum").toggle();
+		$(".loginfo").hide();
+	});
+
+	$(".log").on("click",function(){
+		$(".loginfo").toggle();
+		$(".leftNum").hide();
+	});
+	$(".banner").on("click",function(){
+		$(".szpop").toggle()
+	});
+
+	$(".ps li").on("click",function(){
+		if(isstart) return false;
+		$(this).addClass("on").siblings().removeClass("on");
+		currentPirze = $(this).index();
+		$(".leftNum,.loginfo").hide();
+		loading();
+	});
+
+	$(".mod").on("click",function(){
+		storage['jisu'+currentPirze] = $("#jisu").val();
+		$("input[id^='leftN']").each(function(){
+			storage[$(this).attr("id").replace('leftN','')] = $(this).val();
+		});
+		loadLeft();
+		alert('修改成功');
+		$(".leftNum,.loginfo").hide();
+	});
+
+	$("#setting").on("click",function(){
+		if(!$(".ps").is(":visible")){
+			var pass=prompt("请输入密码","");
+			if(pass!=PASSWORD){
+				return false;
+			}
+		}
+ 
+		$(".ps,.szpop").toggle();
+	});
+});
+</script>
+</body>
+</html>
