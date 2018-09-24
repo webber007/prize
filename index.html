@@ -99,14 +99,11 @@ table .on{background:#ffce22;color:#fff;}
 	<div class="log">抽奖记录</div>
 </div>
 <script src="config.js"></script>
+<script src="tool.js"></script>
+
 <script>
 var rand,isstart = false, storage = window.localStorage,  currentPirze = 0; //当前抽奖
- 
-Number.prototype.toFixed = function( fractionDigits )  
-{  
-    return (parseInt(this * Math.pow( 10, fractionDigits  ) + 0.5)/Math.pow(10,fractionDigits)).toString();  
-}  
-
+  
 //设置转盘奖品
 function loading(){
 	for(let i=1;i<9;i++){
