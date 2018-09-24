@@ -1,4 +1,4 @@
-var questionArr =
+let questionArr =
 [
 	[
 		[ '1','儿童自行车',1],
@@ -23,4 +23,4 @@ var questionArr =
 		[2,4,6]
 	]
 ];
-var PASSWORD="123456";
+let PASSWORD="123456";
